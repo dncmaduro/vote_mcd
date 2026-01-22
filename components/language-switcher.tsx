@@ -3,6 +3,7 @@
 import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { usePathname as useNextPathname } from "next/navigation";
+import Image from "next/image";
 
 const LOCALES = [
   { code: "vi", label: "VI" },
@@ -29,7 +30,8 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="fixed right-2 top-2 z-50 p-2">
+    <div className="fixed flex justify-between items-center top-2 z-50 w-full p-4">
+      <Image src="/logo.png" alt="Logo" width={100} height={40} />
       <div className="flex items-center gap-1 rounded-full bg-black/30 px-2 py-1 backdrop-blur-md">
         {LOCALES.map((item) => {
           const isActive = locale === item.code;
