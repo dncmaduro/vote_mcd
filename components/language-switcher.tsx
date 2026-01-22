@@ -30,7 +30,7 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="fixed flex justify-between items-center top-2 z-50 w-full p-4">
+    <div className="fixed flex justify-between items-center z-50 w-full pt-3 p-4">
       <Image src="/logo.png" alt="Logo" width={100} height={40} />
       <div className="flex items-center gap-1 rounded-full bg-black/30 px-2 py-1 backdrop-blur-md">
         {LOCALES.map((item) => {
