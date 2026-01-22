@@ -30,7 +30,7 @@ export default function Home() {
           </div>
 
           <div className="animate-enter-up [animation-delay:180ms]">
-            <p className="max-w-md font-sans text-base leading-7 text-white/90">
+            <p className="max-w-md whitespace-pre-line font-sans text-base leading-7 text-white/90">
               {t("hero")}
             </p>
           </div>
