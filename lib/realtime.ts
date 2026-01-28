@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 
 export function subscribeVoteCounts(
   eventId: string,
-  onChange: (row: any) => void,
+  onChange: (row: Record<string, unknown>) => void,
 ) {
   return supabase
     .channel(`vote_counts:${eventId}`)
@@ -15,7 +15,7 @@ export function subscribeVoteCounts(
         filter: `event_id=eq.${eventId}`,
       },
       (payload) => {
-        if (payload.new) onChange(payload.new);
+        if (payload.new) onChange(payload.new as Record<string, unknown>);
       },
     )
     .subscribe();

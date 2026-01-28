@@ -1,8 +1,42 @@
 {
   "home": {
-    "cta": "Explore the Flight",
-    "ctaTimeline": "Flight Timeline",
+    "cta": "Vote now",
+    "ctaTimeline": "Contest info",
     "ctaGotTalent": "My Candy's Got Talent",
-    "hero": "Welcome to all special passengers on flight MCD2025.\n\nOver the past year, we have navigated through every turbulence to soar high into the skies of success. Your companionship is the vital energy that has helped us reach proud milestones.\n\nThis ticket is a heartfelt tribute to you – the fellow traveler who stayed united and shone brightly. Let’s touch down to celebrate our journey and refuel for even greater heights."
+    "hero": "Welcome to My Candy's Got Talent!\n\nVote for your favorite performances and help create an unforgettable night.\n\nYou can pick up to 3 performances."
+  },
+  "vote": {
+    "pre": {
+      "title": "Voting hasn’t started yet",
+      "openAfter": "VOTING OPENS IN:",
+      "days": "DAYS",
+      "hours": "HOURS",
+      "minutes": "MINUTES",
+      "seconds": "SECONDS",
+      "desc": "Get ready to vote for your favorite talent.\nEach vote is a big encouragement!",
+      "backHome": "Back to home"
+    },
+    "status": {
+      "zeroTitle": "Selected 0/{max}",
+      "zeroDesc": "Choose up to {max} performances you like",
+      "someTitle": "Selected {count}/{max}",
+      "someDesc": "You can still choose up to {remaining} more",
+      "fullTitle": "Selected {max}/{max}",
+      "fullDesc": "You’ve reached the selection limit"
+    },
+    "hint": {
+      "remaining": "Choose up to {remaining} more performances",
+      "full": "You’ve reached the selection limit"
+    },
+    "submit": "Submit votes",
+    "footer": {
+      "needPick": "Please pick at least 1 performance to continue",
+      "confirm": "Please double-check before confirming"
+    }
+  },
+  "thanks": {
+    "title": "Thanks for voting!",
+    "desc": "Your selection has been recorded\nsuccessfully. See you at\nthe party night!",
+    "backHome": "Back to home"
   }
 }

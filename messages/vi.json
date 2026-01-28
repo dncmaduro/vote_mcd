@@ -1,8 +1,42 @@
 {
   "home": {
-    "cta": "Khám phá chuyến bay",
-    "ctaTimeline": "Lịch trình chuyến bay",
+    "cta": "Bình chọn ngay",
+    "ctaTimeline": "Thông tin cuộc thi",
     "ctaGotTalent": "My Candy's Got Talent",
-    "hero": "Chào mừng những hành khách đặc biệt trên chuyến bay MCD2025.\n\nSuốt một năm qua, chúng ta đã cùng nhau vượt qua mọi vùng nhiễu động để đưa con tàu tập thể vươn cao trên bầu trời thành công. Sự đồng hành của bạn chính là nguồn năng lượng quý giá giúp chúng ta ghi dấu những cột mốc đầy tự hào.\n\nTấm vé này là lời tri ân sâu sắc gửi đến bạn – người đồng hành đã cùng gắn kết và tỏa sáng. Hãy cùng chúng tôi hạ cánh để nhìn lại hành trình đã qua và nạp năng lượng cho những đỉnh cao mới."
+    "hero": "Chào mừng bạn đến với My Candy's Got Talent!\n\nHãy bình chọn cho những tiết mục bạn yêu thích nhất và cùng nhau tạo nên một đêm tiệc bùng nổ.\n\nBạn có thể chọn tối đa 3 tiết mục."
+  },
+  "vote": {
+    "pre": {
+      "title": "Bình chọn chưa bắt đầu",
+      "openAfter": "CỔNG BÌNH CHỌN SẼ MỞ SAU:",
+      "days": "NGÀY",
+      "hours": "GIỜ",
+      "minutes": "PHÚT",
+      "seconds": "GIÂY",
+      "desc": "Hãy chuẩn bị sẵn sàng để bình chọn cho tài năng\nyêu thích của bạn. Mỗi lượt bình chọn là một lời\nkhích lệ to lớn!",
+      "backHome": "Về trang chủ"
+    },
+    "status": {
+      "zeroTitle": "Đã chọn 0/{max} tiết mục",
+      "zeroDesc": "Chọn tối đa {max} tiết mục bạn yêu thích",
+      "someTitle": "Đã chọn {count}/{max} tiết mục",
+      "someDesc": "Bạn có thể chọn thêm tối đa {remaining} tiết mục",
+      "fullTitle": "Đã chọn {max}/{max} tiết mục",
+      "fullDesc": "Bạn đã chọn tối đa số lượng bình chọn"
+    },
+    "hint": {
+      "remaining": "Chọn thêm tối đa {remaining} tiết mục",
+      "full": "Bạn đã chọn đủ số lượng bình chọn"
+    },
+    "submit": "Gửi bình chọn",
+    "footer": {
+      "needPick": "Vui lòng chọn ít nhất 1 tiết mục để tiếp tục",
+      "confirm": "Vui lòng kiểm tra kỹ trước khi xác nhận"
+    }
+  },
+  "thanks": {
+    "title": "Cảm ơn bạn đã bình chọn!",
+    "desc": "Lựa chọn của bạn đã được ghi nhận\nthành công. Hẹn gặp lại bạn tại\nđêm tiệc!",
+    "backHome": "Về trang chủ"
   }
 }
