@@ -6,6 +6,15 @@
     "hero": "欢迎来到 My Candy's Got Talent！\n\n为你最喜欢的节目投票，一起创造难忘之夜。\n\n你最多可选择 3 个节目。"
   },
   "vote": {
+    "backgroundAlt": "Background",
+    "loading": "加载中...",
+    "submitting": "...",
+    "errors": {
+      "loadFailed": "加载失败",
+      "closed": "投票已关闭",
+      "alreadyVoted": "你已投过票",
+      "submitFailed": "提交失败"
+    },
     "pre": {
       "title": "投票尚未开始",
       "openAfter": "投票将于以下时间后开启：",
@@ -32,6 +41,11 @@
     "footer": {
       "needPick": "请至少选择 1 个节目后继续",
       "confirm": "确认前请仔细检查"
+    },
+    "live": {
+      "codeLabel": "编号：",
+      "voteLabel": "投票",
+      "backHome": "返回首页"
     }
   },
   "thanks": {
@@ -44,5 +58,42 @@
     "subtitle": "排行榜基于总票数",
     "back": "返回",
     "votesLabel": "票"
+  },
+  "common": {
+    "logoAlt": "Logo",
+    "locale": {
+      "vi": "越南语",
+      "en": "英语",
+      "zh": "中文"
+    }
+  },
+  "admin": {
+    "backgroundAlt": "Background",
+    "title": "Admin – Vote Control",
+    "subtitle": "输入密钥以加载活动并切换投票开/关。",
+    "secretLabel": "Admin Secret",
+    "secretPlaceholder": "输入密钥...",
+    "secretHint": "密钥仅保存在浏览器会话中，不会写入代码。",
+    "loading": "加载中...",
+    "loadEvents": "加载活动",
+    "eventsTitle": "活动",
+    "eventsTotal": "总数：{total}",
+    "empty": "暂无数据。输入密钥后点击 <b>加载活动</b>。",
+    "updating": "更新中...",
+    "openVote": "开启投票",
+    "closeVote": "关闭投票",
+    "copy": "复制",
+    "copyLink": "复制链接",
+    "openVoteTab": "打开投票页",
+    "openResultsTab": "打开结果页",
+    "tip": "提示：用于按活动 slug 生成二维码，投票链接应为",
+    "table": {
+      "title": "标题",
+      "slug": "Slug",
+      "status": "状态",
+      "links": "链接",
+      "actions": "操作"
+    }
   }
+}
 }

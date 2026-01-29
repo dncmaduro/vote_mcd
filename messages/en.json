@@ -6,6 +6,15 @@
     "hero": "Welcome to My Candy's Got Talent!\n\nVote for your favorite performances and help create an unforgettable night.\n\nYou can pick up to 3 performances."
   },
   "vote": {
+    "backgroundAlt": "Background",
+    "loading": "Loading...",
+    "submitting": "...",
+    "errors": {
+      "loadFailed": "Failed to load",
+      "closed": "Voting is closed",
+      "alreadyVoted": "You have already voted",
+      "submitFailed": "Submit failed"
+    },
     "pre": {
       "title": "Voting hasn’t started yet",
       "openAfter": "VOTING OPENS IN:",
@@ -32,6 +41,11 @@
     "footer": {
       "needPick": "Please pick at least 1 performance to continue",
       "confirm": "Please double-check before confirming"
+    },
+    "live": {
+      "codeLabel": "CODE:",
+      "voteLabel": "VOTE",
+      "backHome": "BACK TO HOME"
     }
   },
   "thanks": {
@@ -44,5 +58,42 @@
     "subtitle": "Ranking based on total votes",
     "back": "BACK",
     "votesLabel": "votes"
+  },
+  "common": {
+    "logoAlt": "Logo",
+    "locale": {
+      "vi": "VI",
+      "en": "EN",
+      "zh": "中文"
+    }
+  },
+  "admin": {
+    "backgroundAlt": "Background",
+    "title": "Admin – Vote Control",
+    "subtitle": "Enter the secret to load events and toggle voting on/off.",
+    "secretLabel": "Admin Secret",
+    "secretPlaceholder": "Enter secret...",
+    "secretHint": "Secret stays in the browser session and is not stored in code.",
+    "loading": "Loading...",
+    "loadEvents": "Load events",
+    "eventsTitle": "Events",
+    "eventsTotal": "Total: {total}",
+    "empty": "No data. Enter secret then click <b>Load events</b>.",
+    "updating": "Updating...",
+    "openVote": "Open vote",
+    "closeVote": "Close vote",
+    "copy": "Copy",
+    "copyLink": "Copy link",
+    "openVoteTab": "Open vote",
+    "openResultsTab": "Open results",
+    "tip": "Tip: for QR by event slug, the vote link should be",
+    "table": {
+      "title": "Title",
+      "slug": "Slug",
+      "status": "Status",
+      "links": "Links",
+      "actions": "Actions"
+    }
   }
+}
 }

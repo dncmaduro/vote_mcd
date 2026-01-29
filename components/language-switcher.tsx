@@ -1,6 +1,7 @@
 'use client'
 
 import { useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { useRouter, usePathname } from '@/i18n/navigation'
 import Image from 'next/image'
 
@@ -13,6 +14,7 @@ const LOCALES = [
 type AppLocale = (typeof LOCALES)[number]['code']
 
 export default function LanguageSwitcher() {
+  const t = useTranslations('common')
   const locale = useLocale() as AppLocale
   const router = useRouter()
   const pathname = usePathname() // ✅ pathname WITHOUT locale prefix (next-intl)
@@ -24,7 +26,7 @@ export default function LanguageSwitcher() {
 
   return (
     <div className="fixed z-50 flex w-full items-center justify-between p-4 pt-3">
-      <Image src="/logo.png" alt="Logo" width={100} height={40} />
+      <Image src="/logo.png" alt={t('logoAlt')} width={100} height={40} />
       <div className="flex items-center gap-1 rounded-full bg-black/30 px-2 py-1 backdrop-blur-md">
         {LOCALES.map((item) => {
           const isActive = locale === item.code
@@ -43,7 +45,7 @@ export default function LanguageSwitcher() {
                   : 'text-white/80 hover:bg-white/20',
               ].join(' ')}
             >
-              {item.label}
+              {t(`locale.${item.code}`)}
             </button>
           )
         })}

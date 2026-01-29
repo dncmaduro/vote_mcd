@@ -86,12 +86,16 @@ function ProgressRing({ value, max }: { value: number; max: number }) {
 function VoteCard({
   code,
   title,
+  codeLabel,
+  voteLabel,
   selected,
   disabled,
   onToggle,
 }: {
   code: string
   title: string
+  codeLabel: string
+  voteLabel: string
   selected: boolean
   disabled: boolean
   onToggle: () => void
@@ -118,7 +122,11 @@ function VoteCard({
       >
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <div className="flex items-center gap-3"></div>
+            <div className="flex items-center gap-3">
+              <span className="rounded-full bg-[#f5d061]/15 px-3 py-1 text-xs font-bold tracking-wider text-[#f5d061]">
+                {codeLabel} {code}
+              </span>
+            </div>
             <div className="mt-2 text-2xl font-bold tracking-tight text-white">
               {title}
             </div>
@@ -146,7 +154,7 @@ function VoteCard({
                   'group-hover:border-[#f5d061]/70'
                 )}
               >
-                VOTE
+                {voteLabel}
               </div>
             )}
           </div>
@@ -333,7 +341,7 @@ export default function VotePage() {
     setSubmitError(null)
 
     if (!event || event.status !== 'open') {
-      setSubmitError('Voting is closed')
+      setSubmitError(t('errors.closed'))
       return
     }
     if (selectedIds.length === 0) return
@@ -358,7 +366,7 @@ export default function VotePage() {
       }
 
       if (res.status === 409) {
-        setSubmitError('Thiết bị này đã vote rồi.')
+        setSubmitError(t('errors.alreadyVoted'))
         setAlreadyVoted(true)
         setSelectedIds([]) // optional: clear chọn
         return
@@ -367,12 +375,12 @@ export default function VotePage() {
       const json = await res.json().catch(() => ({}))
 
       if (res.status === 403) {
-        setSubmitError('Voting is closed')
+        setSubmitError(t('errors.closed'))
         setSelectedIds([])
         return
       }
 
-      setSubmitError(json?.message || 'Submit failed')
+      setSubmitError(json?.message || t('errors.submitFailed'))
     } finally {
       setSubmitting(false)
     }
@@ -383,7 +391,7 @@ export default function VotePage() {
       <div className="fixed inset-0 -z-10 pointer-events-none">
         <Image
           src="/background.png"
-          alt="Background"
+          alt={t('backgroundAlt')}
           fill
           priority
           className="object-cover"
@@ -393,13 +401,13 @@ export default function VotePage() {
       {loading ? (
         <div className="relative min-h-screen w-full px-6 pb-16 pt-24">
           <div className="mx-auto w-full max-w-md text-center text-white/70">
-            Loading...
+            {t('loading')}
           </div>
         </div>
       ) : error || !event ? (
         <div className="relative min-h-screen w-full px-6 pb-16 pt-24">
           <div className="mx-auto w-full max-w-md text-center text-white/70">
-            {error ?? 'Failed to load'}
+            {error ?? t('errors.loadFailed')}
           </div>
         </div>
       ) : !live ? (
@@ -441,6 +449,8 @@ export default function VotePage() {
                     key={act.id}
                     code={act.code}
                     title={act.title}
+                    codeLabel={t('live.codeLabel')}
+                    voteLabel={t('live.voteLabel')}
                     selected={selectedIds.includes(act.id)}
                     disabled={maxReached || alreadyVoted}
                     onToggle={() => toggle(act.id)}
@@ -501,9 +511,9 @@ export default function VotePage() {
                   )}
                 >
                   {alreadyVoted
-                    ? 'QUAY VỀ TRANG CHỦ'
+                    ? t('live.backHome')
                     : submitting
-                      ? '...'
+                      ? t('submitting')
                       : t('submit')}
                 </button>
 

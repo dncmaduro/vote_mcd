@@ -6,6 +6,15 @@
     "hero": "Chào mừng bạn đến với My Candy's Got Talent!\n\nHãy bình chọn cho những tiết mục bạn yêu thích nhất và cùng nhau tạo nên một đêm tiệc bùng nổ.\n\nBạn có thể chọn tối đa 3 tiết mục."
   },
   "vote": {
+    "backgroundAlt": "Background",
+    "loading": "Đang tải...",
+    "submitting": "...",
+    "errors": {
+      "loadFailed": "Không thể tải dữ liệu",
+      "closed": "Cổng bình chọn đang đóng",
+      "alreadyVoted": "Thiết bị này đã vote rồi.",
+      "submitFailed": "Gửi bình chọn thất bại"
+    },
     "pre": {
       "title": "Bình chọn chưa bắt đầu",
       "openAfter": "CỔNG BÌNH CHỌN SẼ MỞ SAU:",
@@ -32,6 +41,11 @@
     "footer": {
       "needPick": "Vui lòng chọn ít nhất 1 tiết mục để tiếp tục",
       "confirm": "Vui lòng kiểm tra kỹ trước khi xác nhận"
+    },
+    "live": {
+      "codeLabel": "MÃ SỐ:",
+      "voteLabel": "VOTE",
+      "backHome": "QUAY VỀ TRANG CHỦ"
     }
   },
   "thanks": {
@@ -44,5 +58,42 @@
     "subtitle": "Bảng xếp hạng dựa trên tổng lượt bình chọn",
     "back": "QUAY LẠI",
     "votesLabel": "Lượt bình chọn"
+  },
+  "common": {
+    "logoAlt": "Logo",
+    "locale": {
+      "vi": "VI",
+      "en": "EN",
+      "zh": "中文"
+    }
+  },
+  "admin": {
+    "backgroundAlt": "Background",
+    "title": "Admin – Vote Control",
+    "subtitle": "Nhập secret để load events và toggle mở/đóng cổng vote.",
+    "secretLabel": "Admin Secret",
+    "secretPlaceholder": "Nhập secret...",
+    "secretHint": "Secret chỉ nằm trong browser session, không lưu vào code.",
+    "loading": "Đang tải...",
+    "loadEvents": "Load events",
+    "eventsTitle": "Events",
+    "eventsTotal": "Total: {total}",
+    "empty": "Chưa có dữ liệu. Nhập secret rồi bấm <b>Load events</b>.",
+    "updating": "Đang cập nhật...",
+    "openVote": "Mở vote",
+    "closeVote": "Đóng vote",
+    "copy": "Copy",
+    "copyLink": "Copy link",
+    "openVoteTab": "Open vote",
+    "openResultsTab": "Open results",
+    "tip": "Tip: để QR theo event slug, link vote nên là",
+    "table": {
+      "title": "Title",
+      "slug": "Slug",
+      "status": "Status",
+      "links": "Links",
+      "actions": "Actions"
+    }
   }
+}
 }

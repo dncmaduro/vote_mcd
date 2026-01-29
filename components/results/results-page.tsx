@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { supabase } from '@/lib/supabase'
 import { subscribeVoteCounts, type VoteCountRow } from '@/lib/realtime'
-import { LayoutGroup, motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 
 function cn(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(' ')
@@ -19,145 +19,134 @@ type ResultRow = {
   votes: number
 }
 
+type RankedRow = ResultRow & {
+  rank: number // competition ranking: 1,1,3...
+  showRank: boolean // only show on first row of that rank group
+  accent: 'gold' | 'silver' | 'bronze' | 'neutral'
+}
+
 function formatNumber(n: number) {
   return new Intl.NumberFormat().format(n)
 }
 
-function HeartPill({
-  votes,
-  accent,
-}: {
-  votes: number
-  accent: 'gold' | 'silver' | 'bronze' | 'neutral'
-}) {
-  const heart =
-    accent === 'gold'
-      ? '#1f4cff'
-      : accent === 'silver' || accent === 'bronze'
-        ? '#ff4d7d'
-        : 'rgba(255,255,255,0.65)'
+/**
+ * Competition ranking (a.k.a. "1224 ranking"):
+ * If two people tie for 1st, next is 3rd. We also hide duplicated rank label.
+ */
+function rankRows(rows: ResultRow[]): RankedRow[] {
+  // rows is assumed already sorted by votes desc
+  let rank = 0
+  let prevVotes: number | null = null
 
-  const pill =
+  return rows.map((r, idx) => {
+    const isTie = prevVotes !== null && r.votes === prevVotes
+    if (!isTie) {
+      rank = idx + 1 // competition ranking
+    }
+    const showRank = !isTie
+    prevVotes = r.votes
+
+    const accent: RankedRow['accent'] =
+      rank === 1
+        ? 'gold'
+        : rank === 2
+          ? 'silver'
+          : rank === 3
+            ? 'bronze'
+            : 'neutral'
+
+    return { ...r, rank, showRank, accent }
+  })
+}
+
+function BarItem({ row }: { row: RankedRow }) {
+  const accent = row.accent
+
+  const leftBadge =
+    accent === 'gold'
+      ? 'bg-[#ffd21f] text-[#0b1a4b] ring-[#ffd21f]/35'
+      : accent === 'silver'
+        ? 'bg-white/15 text-white ring-white/25'
+        : accent === 'bronze'
+          ? 'bg-[#ffb35c]/25 text-[#ffd7b0] ring-white/20'
+          : 'bg-white/10 text-white/80 ring-white/15'
+
+  const titleColor =
+    accent === 'gold'
+      ? 'text-white'
+      : accent === 'silver'
+        ? 'text-white'
+        : accent === 'bronze'
+          ? 'text-white'
+          : 'text-white'
+
+  const subColor =
+    accent === 'gold'
+      ? 'text-[#ffd21f]/95'
+      : accent === 'silver'
+        ? 'text-white/55'
+        : accent === 'bronze'
+          ? 'text-[#ffb35c]/70'
+          : 'text-white/35'
+
+  const pillBg =
     accent === 'gold' ? 'bg-[#ffd21f] text-[#0b1a4b]' : 'bg-white/10 text-white'
 
   return (
     <motion.div
-      key={votes} // pulse when votes changes
-      initial={{ scale: 1 }}
-      animate={{ scale: [1, 1.06, 1] }}
-      transition={{ duration: 0.22 }}
-      className={cn(
-        'inline-flex items-center gap-2 rounded-full px-5 py-2.5',
-        'ring-1 ring-white/10',
-        pill
-      )}
-    >
-      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
-        <path
-          d="M12 21s-7.5-4.6-9.6-9.3C.8 8 3.1 5.5 6 5.5c1.8 0 3.4 1 4.2 2.4.8-1.4 2.4-2.4 4.2-2.4 2.9 0 5.2 2.5 3.6 6.2C19.5 16.4 12 21 12 21z"
-          fill={heart}
-          opacity="0.95"
-        />
-      </svg>
-      <span className="text-lg font-extrabold">{formatNumber(votes)}</span>
-    </motion.div>
-  )
-}
-
-function TopCard({ rank, row }: { rank: 1 | 2 | 3; row: ResultRow }) {
-  const accent: 'gold' | 'silver' | 'bronze' =
-    rank === 1 ? 'gold' : rank === 2 ? 'silver' : 'bronze'
-
-  const size = rank === 1 ? 'h-[340px] md:h-[560px]' : 'h-[300px] md:h-[440px]'
-
-  const rankColor =
-    accent === 'gold'
-      ? 'text-[#ffd21f]/90'
-      : accent === 'silver'
-        ? 'text-white/28'
-        : 'text-[#ffb35c]/28'
-
-  const rankTop = accent === 'gold' ? 'top-10 md:-top-4' : 'top-8 md:top-6'
-
-  const cardBg = rank === 1 ? 'bg-white/10' : 'bg-white/8'
-
-  const teamColor =
-    accent === 'gold'
-      ? 'text-[#ffd21f]'
-      : accent === 'silver'
-        ? 'text-[#ffd21f]'
-        : 'text-[#ffb35c]'
-
-  const ring =
-    accent === 'gold'
-      ? 'ring-[#ffd21f]/35'
-      : accent === 'silver'
-        ? 'ring-white/18'
-        : 'ring-white/18'
-
-  return (
-    <motion.div
       layout
       transition={{ type: 'spring', stiffness: 520, damping: 42 }}
       className={cn(
-        'relative overflow-hidden rounded-[44px] ring-1 ring-white/12 backdrop-blur',
-        cardBg,
-        ring,
-        size
+        'flex items-center justify-between gap-4 rounded-2xl px-5 py-4',
+        'bg-white/8 ring-1 ring-white/12 backdrop-blur'
       )}
     >
-      <div className="relative flex h-full flex-col items-center justify-center px-8 py-10 text-center md:px-10 md:py-12">
+      {/* Left: rank + title */}
+      <div className="flex min-w-0 items-center gap-4">
         <div
           className={cn(
-            `${rankTop} text-[96px] font-extrabold md:text-[140px]`,
-            rankColor
+            'flex h-11 w-11 shrink-0 items-center justify-center rounded-full',
+            'ring-1',
+            leftBadge
           )}
+          aria-label={`Rank ${row.rank}`}
         >
-          {rank}
+          <span className="text-lg font-extrabold">
+            {row.showRank ? row.rank : ''}
+          </span>
         </div>
-        <div
-          className={cn(
-            'mt-8 text-3xl font-extrabold tracking-tight text-white',
-            rank === 1 ? 'md:text-5xl' : 'md:text-4xl'
-          )}
-        >
-          {row.title}
-        </div>
-        <div
-          className={cn(
-            'mt-3 text-xs font-bold tracking-[0.35em] md:text-sm',
-            teamColor
-          )}
-        >
-          {(row.team || '').toUpperCase()}
-        </div>
-        <div className="mt-10">
-          <HeartPill votes={row.votes} accent={accent} />
-        </div>
-      </div>
-    </motion.div>
-  )
-}
 
-function MobileWinner({ row }: { row: ResultRow }) {
-  return (
-    <motion.div
-      layout
-      transition={{ type: 'spring', stiffness: 520, damping: 42 }}
-      className="relative overflow-hidden rounded-3xl bg-white/10 p-7 ring-1 ring-white/12 backdrop-blur"
-    >
-      <div className="absolute left-6 top-6 text-6xl font-extrabold text-[#ffd21f]/70">
-        1
-      </div>
-      <div className="pl-14 text-left">
-        <div className="text-2xl font-extrabold text-white">{row.title}</div>
-        <div className="mt-1 text-xs font-bold tracking-[0.35em] text-[#f5d061]/80">
-          {(row.team || '').toUpperCase()}
-        </div>
-        <div className="mt-4">
-          <HeartPill votes={row.votes} accent="gold" />
+        <div className="min-w-0">
+          <div className={cn('truncate text-lg font-extrabold', titleColor)}>
+            {row.title}
+          </div>
+          <div
+            className={cn(
+              'mt-1 truncate font-sans text-xs font-bold tracking-[0.22em]',
+              subColor
+            )}
+          >
+            {(row.team || '').toUpperCase()}
+          </div>
         </div>
       </div>
+
+      {/* Right: votes pill */}
+      <motion.div
+        key={row.votes}
+        initial={{ scale: 1 }}
+        animate={{ scale: [1, 1.04, 1] }}
+        transition={{ duration: 0.2 }}
+        className={cn(
+          'shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2',
+          'ring-1 ring-white/10',
+          pillBg
+        )}
+      >
+        <span className="text-xl font-extrabold">
+          {formatNumber(row.votes)}
+        </span>
+      </motion.div>
     </motion.div>
   )
 }
@@ -225,9 +214,11 @@ export default function ResultsPageClient() {
       if (error) return
 
       const map: Record<string, number> = {}
-      ;(data ?? []).forEach((r: any) => {
-        map[r.option_id] = Number(r.count ?? 0)
-      })
+      ;(data as Array<{ option_id: string; count: number | null }> | null)?.forEach(
+        (r) => {
+          map[r.option_id] = Number(r.count ?? 0)
+        }
+      )
       setVoteMap(map)
     }
 
@@ -253,8 +244,8 @@ export default function ResultsPageClient() {
     }
   }, [eventId])
 
-  const rows = useMemo(() => {
-    const list: ResultRow[] = options
+  const rankedRows = useMemo(() => {
+    const base: ResultRow[] = options
       .map((opt) => ({
         optionId: opt.id,
         code: String((opt.sort_order ?? 0) + 1).padStart(3, '0'),
@@ -264,25 +255,16 @@ export default function ResultsPageClient() {
       }))
       .sort((a, b) => b.votes - a.votes)
 
-    return list
+    return rankRows(base)
   }, [options, voteMap])
 
-  // safe fallback to avoid crash when < 3 options
-  const safe = (r?: ResultRow): ResultRow =>
-    r ?? { optionId: 'na', code: '', title: '—', team: '', votes: 0 }
-
-  const top1 = safe(rows[0])
-  const top2 = safe(rows[1])
-  const top3 = safe(rows[2])
-  const rest = rows.slice(3)
-
-  if (rows.length === 0) {
+  if (rankedRows.length === 0) {
     return <div className="p-10 text-center text-white/70">No votes yet</div>
   }
 
   return (
     <div className="relative min-h-screen w-full px-6 pb-28 pt-24">
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-5xl">
         <div className="mb-10 text-center md:mb-12">
           <div className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
             {t('title')}
@@ -293,133 +275,20 @@ export default function ResultsPageClient() {
         </div>
 
         <LayoutGroup>
-          {/* Desktop / HD */}
-          {rows.length >= 3 ? (
-            <div className="hidden md:grid md:grid-cols-12 md:items-end md:gap-10">
-              <motion.div layout className="col-span-4">
-                <TopCard rank={2} row={top2} />
-              </motion.div>
-
-              <motion.div layout className="col-span-4">
-                <TopCard rank={1} row={top1} />
-              </motion.div>
-
-              <motion.div layout className="col-span-4">
-                <TopCard rank={3} row={top3} />
-              </motion.div>
-            </div>
-          ) : (
-            // if fewer than 3, just show a single big winner on desktop too
-            <div className="hidden md:block">
-              <TopCard rank={1} row={top1} />
-            </div>
-          )}
-
-          {/* Mobile */}
-          <div className="md:hidden">
-            <MobileWinner row={top1} />
-
-            {rows.length >= 3 && (
-              <motion.div layout className="mt-5 grid grid-cols-2 gap-4">
-                <motion.div
-                  layout
-                  transition={{ type: 'spring', stiffness: 520, damping: 42 }}
-                  className="relative overflow-hidden rounded-3xl bg-white/8 p-5 ring-1 ring-white/12 backdrop-blur"
-                >
-                  <div className="text-5xl font-extrabold text-white/45">2</div>
-                  <div className="mt-2 text-base font-extrabold text-white">
-                    {top2.title}
-                  </div>
-                  <div className="mt-1 text-[10px] font-bold tracking-[0.35em] text-white/45">
-                    {(top2.team || '').toUpperCase()}
-                  </div>
-                  <div className="mt-4">
-                    <HeartPill votes={top2.votes} accent="silver" />
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  layout
-                  transition={{ type: 'spring', stiffness: 520, damping: 42 }}
-                  className="relative overflow-hidden rounded-3xl bg-white/8 p-5 ring-1 ring-white/12 backdrop-blur"
-                >
-                  <div className="text-5xl font-extrabold text-[#ffb35c]/40">
-                    3
-                  </div>
-                  <div className="mt-2 text-base font-extrabold text-white">
-                    {top3.title}
-                  </div>
-                  <div className="mt-1 text-[10px] font-bold tracking-[0.35em] text-[#c97b2a]/70">
-                    {(top3.team || '').toUpperCase()}
-                  </div>
-                  <div className="mt-4">
-                    <HeartPill votes={top3.votes} accent="bronze" />
-                  </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </div>
-
-          {/* Rest list */}
-          <div className="mt-10 grid gap-4 md:mt-12 md:grid-cols-2 md:gap-5">
+          <div className="grid gap-3 md:gap-4">
             <AnimatePresence initial={false}>
-              {rest.map((row, idx) => {
-                const rank = idx + 4
-                return (
-                  <motion.div
-                    key={row.optionId}
-                    layout
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ type: 'spring', stiffness: 520, damping: 42 }}
-                    className={cn(
-                      'flex items-center justify-between gap-6 rounded-2xl px-6 py-5',
-                      'bg-white/8 ring-1 ring-white/12 backdrop-blur'
-                    )}
-                  >
-                    <div className="flex items-center gap-5">
-                      <div className="w-10 text-2xl font-extrabold italic text-white/70">
-                        {String(rank).padStart(2, '0')}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="truncate text-lg font-extrabold text-white">
-                          {row.title}
-                        </div>
-                        <div className="mt-1 truncate font-sans text-xs tracking-[0.22em] text-white/35">
-                          {(row.team || '').toUpperCase()}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="shrink-0">
-                      <motion.div
-                        key={row.votes} // subtle pulse on count change
-                        initial={{ scale: 1 }}
-                        animate={{ scale: [1, 1.04, 1] }}
-                        transition={{ duration: 0.2 }}
-                        className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/10"
-                      >
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          aria-hidden
-                        >
-                          <path
-                            d="M12 21s-7.5-4.6-9.6-9.3C.8 8 3.1 5.5 6 5.5c1.8 0 3.4 1 4.2 2.4.8-1.4 2.4-2.4 4.2-2.4 2.9 0 5.2 2.5 3.6 6.2C19.5 16.4 12 21 12 21z"
-                            fill="rgba(255,255,255,0.55)"
-                            opacity="0.95"
-                          />
-                        </svg>
-                        <span className="text-sm font-extrabold text-white">
-                          {formatNumber(row.votes)}
-                        </span>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                )
-              })}
+              {rankedRows.map((row) => (
+                <motion.div
+                  key={row.optionId}
+                  layout
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ type: 'spring', stiffness: 520, damping: 42 }}
+                >
+                  <BarItem row={row} />
+                </motion.div>
+              ))}
             </AnimatePresence>
           </div>
         </LayoutGroup>
