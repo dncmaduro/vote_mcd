@@ -38,5 +38,11 @@
     "title": "Thanks for voting!",
     "desc": "Your selection has been recorded\nsuccessfully. See you at\nthe party night!",
     "backHome": "Back to home"
+  },
+  "results": {
+    "title": "Voting results",
+    "subtitle": "Ranking based on total votes",
+    "back": "BACK",
+    "votesLabel": "votes"
   }
 }

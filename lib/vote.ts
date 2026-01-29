@@ -53,6 +53,34 @@ export const VOTE_ACTS: VoteAct[] = [
     subtitle: "Hòa tấu — Accounting",
     tags: [],
   },
+  {
+    id: "024",
+    code: "024",
+    title: "Rap Godz",
+    subtitle: "Rap performance — Operations",
+    tags: [],
+  },
+  {
+    id: "028",
+    code: "028",
+    title: "Piano Serenity",
+    subtitle: "Piano solo — Customer Care",
+    tags: [],
+  },
+  {
+    id: "030",
+    code: "030",
+    title: "Neon Lights",
+    subtitle: "LED dance — Logistics",
+    tags: [],
+  },
+  {
+    id: "033",
+    code: "033",
+    title: "Acoustic Soul",
+    subtitle: "Acoustic trio — Finance",
+    tags: [],
+  },
 ];
 
 export function isVoteOpen(now = new Date()): boolean {

@@ -38,5 +38,11 @@
     "title": "感谢你的投票！",
     "desc": "你的选择已成功记录。\n期待在派对之夜见到你！",
     "backHome": "返回首页"
+  },
+  "results": {
+    "title": "投票结果",
+    "subtitle": "排行榜基于总票数",
+    "back": "返回",
+    "votesLabel": "票"
   }
 }

@@ -38,5 +38,11 @@
     "title": "Cảm ơn bạn đã bình chọn!",
     "desc": "Lựa chọn của bạn đã được ghi nhận\nthành công. Hẹn gặp lại bạn tại\nđêm tiệc!",
     "backHome": "Về trang chủ"
+  },
+  "results": {
+    "title": "Kết quả bình chọn",
+    "subtitle": "Bảng xếp hạng dựa trên tổng lượt bình chọn",
+    "back": "QUAY LẠI",
+    "votesLabel": "Lượt bình chọn"
   }
 }
