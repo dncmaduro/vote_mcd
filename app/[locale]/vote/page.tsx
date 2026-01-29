@@ -118,11 +118,7 @@ function VoteCard({
       >
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <div className="flex items-center gap-3">
-              <span className="rounded-full bg-[#f5d061]/15 px-3 py-1 text-xs font-bold tracking-wider text-[#f5d061]">
-                {`MÃ SỐ: ${code}`}
-              </span>
-            </div>
+            <div className="flex items-center gap-3"></div>
             <div className="mt-2 text-2xl font-bold tracking-tight text-white">
               {title}
             </div>
@@ -216,6 +212,7 @@ export default function VotePage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [alreadyVoted, setAlreadyVoted] = useState(false)
 
   const live = event?.status === 'open'
   const maxReached = selectedIds.length >= MAX_VOTES
@@ -322,6 +319,8 @@ export default function VotePage() {
   }, [options])
 
   const toggle = (id: string) => {
+    if (alreadyVoted) return
+
     setSelectedIds((prev) => {
       if (prev.includes(id)) return prev.filter((x) => x !== id)
       if (prev.length >= MAX_VOTES) return prev
@@ -359,8 +358,9 @@ export default function VotePage() {
       }
 
       if (res.status === 409) {
-        // đã vote trước đó -> UX tốt: vẫn cho qua trang cảm ơn
-        router.push('/vote/thanks')
+        setSubmitError('Thiết bị này đã vote rồi.')
+        setAlreadyVoted(true)
+        setSelectedIds([]) // optional: clear chọn
         return
       }
 
@@ -442,7 +442,7 @@ export default function VotePage() {
                     code={act.code}
                     title={act.title}
                     selected={selectedIds.includes(act.id)}
-                    disabled={maxReached}
+                    disabled={maxReached || alreadyVoted}
                     onToggle={() => toggle(act.id)}
                   />
                 ))}
@@ -479,24 +479,32 @@ export default function VotePage() {
 
                 <button
                   type="button"
-                  onClick={submit}
-                  disabled={
-                    selectedIds.length === 0 ||
-                    submitting ||
-                    event?.status !== 'open'
-                  }
+                  onClick={() => {
+                    if (alreadyVoted) {
+                      router.push('/')
+                    } else {
+                      submit()
+                    }
+                  }}
+                  disabled={submitting || event?.status !== 'open'}
                   className={cn(
                     'w-full rounded-full px-10 py-5',
                     'font-sans font-extrabold uppercase',
                     'text-lg tracking-wider',
                     'shadow-2xl',
                     'transition-transform duration-200 active:scale-[0.98]',
-                    selectedIds.length === 0 || submitting
-                      ? 'cursor-not-allowed bg-white/20 text-white/35'
-                      : 'bg-gradient-to-r from-[#b8860b] via-[#f3e3bd] to-white text-black hover:scale-[1.01]'
+                    alreadyVoted
+                      ? 'bg-white/10 text-white/70'
+                      : selectedIds.length === 0 || submitting
+                        ? 'cursor-not-allowed bg-white/20 text-white/35'
+                        : 'bg-gradient-to-r from-[#b8860b] via-[#f3e3bd] to-white text-black hover:scale-[1.01]'
                   )}
                 >
-                  {submitting ? '...' : t('submit')}
+                  {alreadyVoted
+                    ? 'QUAY VỀ TRANG CHỦ'
+                    : submitting
+                      ? '...'
+                      : t('submit')}
                 </button>
 
                 <div className="mt-3 text-center font-sans text-xs text-white/45">
