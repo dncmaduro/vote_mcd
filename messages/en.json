@@ -3,7 +3,7 @@
     "cta": "Vote now",
     "ctaTimeline": "Contest info",
     "ctaGotTalent": "My Candy's Got Talent",
-    "hero": "Welcome to My Candy's Got Talent!\n\nVote for your favorite performances and help create an unforgettable night.\n\nYou can pick up to 3 performances."
+    "hero": "Welcome to My Candy's Got Talent!\n\nVote for your favorite performances and help create an unforgettable night.\n\nYou can pick up to 1 performances."
   },
   "vote": {
     "backgroundAlt": "Background",
@@ -109,5 +109,4 @@
       "actions": "Actions"
     }
   }
-}
 }

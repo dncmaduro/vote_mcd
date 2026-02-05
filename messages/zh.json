@@ -3,7 +3,7 @@
     "cta": "立即投票",
     "ctaTimeline": "比赛信息",
     "ctaGotTalent": "My Candy's Got Talent",
-    "hero": "欢迎来到 My Candy's Got Talent！\n\n为你最喜欢的节目投票，一起创造难忘之夜。\n\n你最多可选择 3 个节目。"
+    "hero": "欢迎来到 My Candy's Got Talent！\n\n为你最喜欢的节目投票，一起创造难忘之夜。\n\n你最多可选择 1 个节目。"
   },
   "vote": {
     "backgroundAlt": "Background",
@@ -109,5 +109,4 @@
       "actions": "操作"
     }
   }
-}
 }
