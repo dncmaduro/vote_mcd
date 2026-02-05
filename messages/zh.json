@@ -59,6 +59,20 @@
     "back": "返回",
     "votesLabel": "票"
   },
+  "rules": {
+    "backgroundAlt": "Background",
+    "headerAlt": "My Candy's Got Talent",
+    "title": "投票规则",
+    "subtitle": "投票前请仔细阅读。",
+    "items": [
+      "每人最多只能投 1 个节目。",
+      "仅在投票通道开放期间投票有效。",
+      "提交后无法更改或取消。",
+      "系统将根据总票数自动汇总结果。",
+      "主办方拥有最终解释权。"
+    ],
+    "backHome": "返回首页"
+  },
   "common": {
     "logoAlt": "Logo",
     "locale": {

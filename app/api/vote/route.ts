@@ -8,7 +8,7 @@ const supabaseService = createClient(
   { auth: { persistSession: false, autoRefreshToken: false } }
 );
 
-const MAX_VOTES = Number(process.env.MAX_VOTES ?? 3); // hoặc hardcode đúng với FE
+const MAX_VOTES = Number(process.env.MAX_VOTES ?? 1); // hoặc hardcode đúng với FE
 
 type VoteBody = {
   eventId?: string;

@@ -12,7 +12,7 @@
     "errors": {
       "loadFailed": "Không thể tải dữ liệu",
       "closed": "Cổng bình chọn đang đóng",
-      "alreadyVoted": "Thiết bị này đã vote rồi.",
+      "alreadyVoted": "Bạn đã bình chọn rồi.",
       "submitFailed": "Gửi bình chọn thất bại"
     },
     "pre": {
@@ -44,7 +44,7 @@
     },
     "live": {
       "codeLabel": "MÃ SỐ:",
-      "voteLabel": "VOTE",
+      "voteLabel": "BÌNH CHỌN",
       "backHome": "QUAY VỀ TRANG CHỦ"
     }
   },
@@ -58,6 +58,20 @@
     "subtitle": "Bảng xếp hạng dựa trên tổng lượt bình chọn",
     "back": "QUAY LẠI",
     "votesLabel": "Lượt bình chọn"
+  },
+  "rules": {
+    "backgroundAlt": "Background",
+    "headerAlt": "My Candy's Got Talent",
+    "title": "Quy chế bình chọn",
+    "subtitle": "Vui lòng đọc kỹ trước khi tham gia bình chọn.",
+    "items": [
+      "Mỗi người chỉ được bình chọn tối đa 1 tiết mục.",
+      "Bình chọn chỉ hợp lệ trong thời gian cổng bình chọn mở.",
+      "Lựa chọn đã gửi không thể thay đổi hoặc hủy.",
+      "Hệ thống sẽ tự động tổng hợp kết quả theo số lượt bình chọn.",
+      "Quyết định của Ban Tổ Chức là quyết định cuối cùng."
+    ],
+    "backHome": "Về trang chủ"
   },
   "common": {
     "logoAlt": "Logo",
@@ -95,5 +109,4 @@
       "actions": "Actions"
     }
   }
-}
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useMemo, useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
@@ -98,7 +99,7 @@ function BarItem({ row }: { row: RankedRow }) {
       transition={{ type: 'spring', stiffness: 520, damping: 42 }}
       className={cn(
         'flex items-center justify-between gap-4 rounded-2xl px-5 py-4',
-        'bg-white/8 ring-1 ring-white/12 backdrop-blur'
+        'bg-white/10 ring-1 ring-white/12 backdrop-blur'
       )}
     >
       {/* Left: rank + title */}
@@ -111,18 +112,18 @@ function BarItem({ row }: { row: RankedRow }) {
           )}
           aria-label={`Rank ${row.rank}`}
         >
-          <span className="text-lg font-extrabold">
+          <span className="text-2xl font-extrabold">
             {row.showRank ? row.rank : ''}
           </span>
         </div>
 
         <div className="min-w-0">
-          <div className={cn('truncate text-lg font-extrabold', titleColor)}>
+          <div className={cn('truncate text-2xl font-extrabold', titleColor)}>
             {row.title}
           </div>
           <div
             className={cn(
-              'mt-1 truncate font-sans text-xs font-bold tracking-[0.22em]',
+              'mt-1 truncate font-sans text-sm font-extrabold tracking-[0.2em] md:text-xl',
               subColor
             )}
           >
@@ -143,7 +144,7 @@ function BarItem({ row }: { row: RankedRow }) {
           pillBg
         )}
       >
-        <span className="text-xl font-extrabold">
+        <span className="text-2xl font-extrabold">
           {formatNumber(row.votes)}
         </span>
       </motion.div>
@@ -214,11 +215,11 @@ export default function ResultsPageClient() {
       if (error) return
 
       const map: Record<string, number> = {}
-      ;(data as Array<{ option_id: string; count: number | null }> | null)?.forEach(
-        (r) => {
-          map[r.option_id] = Number(r.count ?? 0)
-        }
-      )
+      ;(
+        data as Array<{ option_id: string; count: number | null }> | null
+      )?.forEach((r) => {
+        map[r.option_id] = Number(r.count ?? 0)
+      })
       setVoteMap(map)
     }
 
@@ -264,13 +265,26 @@ export default function ResultsPageClient() {
 
   return (
     <div className="relative min-h-screen w-full px-6 pb-28 pt-24">
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <Image
+          src="/background-results.png"
+          alt="Results background"
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
+      <div className="mx-auto w-full max-w-5xl origin-top scale-105 md:scale-110">
         <div className="mb-10 text-center md:mb-12">
-          <div className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
-            {t('title')}
-          </div>
-          <div className="mt-3 font-sans text-sm text-white/60 md:text-base">
-            {t('subtitle')}
+          <div className="mx-auto w-full max-w-3xl">
+            <Image
+              src="/title-results.png"
+              alt={t('title')}
+              width={1400}
+              height={400}
+              priority
+              className="h-auto w-full"
+            />
           </div>
         </div>
 
@@ -297,7 +311,7 @@ export default function ResultsPageClient() {
       <div className="fixed inset-x-0 bottom-0 z-40 px-6 pb-6">
         <div className="mx-auto w-full max-w-md">
           <Link
-            href="/vote"
+            href="/"
             className={cn(
               'flex w-full items-center justify-center gap-3 rounded-full px-10 py-5',
               'bg-black/40 text-white ring-1 ring-white/10 backdrop-blur',

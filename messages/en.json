@@ -59,6 +59,20 @@
     "back": "BACK",
     "votesLabel": "votes"
   },
+  "rules": {
+    "backgroundAlt": "Background",
+    "headerAlt": "My Candy's Got Talent",
+    "title": "Voting Rules",
+    "subtitle": "Please read carefully before voting.",
+    "items": [
+      "Each person can vote for up to 1 performance.",
+      "Votes are only valid while the voting gate is open.",
+      "Submitted choices cannot be changed or canceled.",
+      "Results are automatically aggregated by total votes.",
+      "The Organizer’s decision is final."
+    ],
+    "backHome": "Back to home"
+  },
   "common": {
     "logoAlt": "Logo",
     "locale": {

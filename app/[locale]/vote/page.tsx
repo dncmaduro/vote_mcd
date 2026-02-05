@@ -19,7 +19,7 @@ type PublicOption = {
   sort_order: number
 }
 
-const MAX_VOTES = 3
+const MAX_VOTES = 1
 const EVENT_SLUG = 'yep2026'
 
 function cn(...parts: Array<string | false | null | undefined>) {
@@ -171,7 +171,7 @@ function PreVoteScreen() {
       <div className="mx-auto w-full max-w-md">
         <div className="text-center">
           <Image
-            src="/header.png"
+            src="/gottalent.png"
             alt="Year End Party 2026"
             width={1400}
             height={500}
