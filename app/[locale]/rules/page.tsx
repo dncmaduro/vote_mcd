@@ -37,13 +37,13 @@ export default function RulesPage() {
           <div className="mt-10 text-3xl font-extrabold tracking-tight text-white md:text-4xl">
             {t('title')}
           </div>
-          <div className="mt-4 whitespace-pre-line font-sans text-base leading-7 text-white/70 md:text-lg">
+          <div className="mt-4 whitespace-pre-line font-sans text-lg leading-8 text-white/70 md:text-xl">
             {t('subtitle')}
           </div>
 
           <div className="mt-8 text-left">
             <div className="rounded-3xl bg-white/6 px-6 py-6 ring-1 ring-white/10 backdrop-blur">
-              <div className="space-y-4 font-sans text-base leading-7 text-white/85">
+              <div className="space-y-4 font-sans text-lg leading-8 text-white/90 md:text-xl">
                 {rules.map((rule, idx) => (
                   <div key={rule} className="flex items-start gap-3">
                     <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-sm font-bold text-white/90">
