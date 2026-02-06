@@ -57,7 +57,8 @@
     "title": "投票结果",
     "subtitle": "排行榜基于总票数",
     "back": "返回",
-    "votesLabel": "票"
+    "votesLabel": "票",
+    "codeLabel": "编号："
   },
   "rules": {
     "backgroundAlt": "Background",

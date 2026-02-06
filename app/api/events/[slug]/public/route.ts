@@ -22,7 +22,7 @@ export async function GET(
 
   const { data: options, error: optErr } = await supabase
     .from("options")
-    .select("id, event_id, label, sort_order")
+    .select("id, event_id, label, sort_order, code")
     .eq("event_id", event.id)
     .order("sort_order", { ascending: true });
 

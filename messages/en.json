@@ -57,7 +57,8 @@
     "title": "Voting results",
     "subtitle": "Ranking based on total votes",
     "back": "BACK",
-    "votesLabel": "votes"
+    "votesLabel": "votes",
+    "codeLabel": "CODE:"
   },
   "rules": {
     "backgroundAlt": "Background",

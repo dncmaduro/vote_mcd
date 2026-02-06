@@ -57,7 +57,8 @@
     "title": "Kết quả bình chọn",
     "subtitle": "Bảng xếp hạng dựa trên tổng lượt bình chọn",
     "back": "QUAY LẠI",
-    "votesLabel": "Lượt bình chọn"
+    "votesLabel": "Lượt bình chọn",
+    "codeLabel": "MÃ SỐ:"
   },
   "rules": {
     "backgroundAlt": "Background",

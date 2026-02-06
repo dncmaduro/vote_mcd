@@ -60,7 +60,7 @@ function rankRows(rows: ResultRow[]): RankedRow[] {
   })
 }
 
-function BarItem({ row }: { row: RankedRow }) {
+function BarItem({ row, codeLabel }: { row: RankedRow; codeLabel: string }) {
   const accent = row.accent
 
   const leftBadge =
@@ -118,7 +118,14 @@ function BarItem({ row }: { row: RankedRow }) {
         </div>
 
         <div className="min-w-0">
-          <div className={cn('truncate text-2xl font-extrabold', titleColor)}>
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-bold tracking-[0.2em] text-white/70 ring-1 ring-white/10">
+              {codeLabel} {row.code}
+            </span>
+          </div>
+          <div
+            className={cn('mt-2 truncate text-2xl font-extrabold', titleColor)}
+          >
             {row.title}
           </div>
           <div
@@ -159,7 +166,7 @@ export default function ResultsPageClient() {
   const [voteMap, setVoteMap] = useState<Record<string, number>>({})
   const [eventId, setEventId] = useState<string | null>(null)
   const [options, setOptions] = useState<
-    Array<{ id: string; label: string; sort_order: number }>
+    Array<{ id: string; label: string; sort_order: number; code: string | null }>
   >([])
 
   // get eventId by slug
@@ -193,7 +200,7 @@ export default function ResultsPageClient() {
 
     supabase
       .from('options')
-      .select('id,label,sort_order')
+      .select('id,label,sort_order,code')
       .eq('event_id', eventId)
       .order('sort_order', { ascending: true })
       .then(({ data }) => setOptions(data ?? []))
@@ -249,7 +256,9 @@ export default function ResultsPageClient() {
     const base: ResultRow[] = options
       .map((opt) => ({
         optionId: opt.id,
-        code: String((opt.sort_order ?? 0) + 1).padStart(3, '0'),
+        code:
+          (opt.code ?? '').trim() ||
+          String((opt.sort_order ?? 0) + 1).padStart(3, '0'),
         title: opt.label,
         team: '', // nếu chưa có team thì để rỗng
         votes: voteMap[opt.id] ?? 0,
@@ -300,7 +309,7 @@ export default function ResultsPageClient() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ type: 'spring', stiffness: 520, damping: 42 }}
                 >
-                  <BarItem row={row} />
+                  <BarItem row={row} codeLabel={t('codeLabel')} />
                 </motion.div>
               ))}
             </AnimatePresence>

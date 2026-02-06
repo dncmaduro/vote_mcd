@@ -17,6 +17,7 @@ type PublicOption = {
   id: string
   label: string
   sort_order: number
+  code: string | null
 }
 
 const MAX_VOTES = 1
@@ -321,7 +322,9 @@ export default function VotePage() {
   const acts = useMemo(() => {
     return options.map((opt, idx) => ({
       id: opt.id,
-      code: String(opt.sort_order + 1 || idx + 1).padStart(2, '0'),
+      code:
+        (opt.code ?? '').trim() ||
+        String(opt.sort_order + 1 || idx + 1).padStart(2, '0'),
       title: opt.label,
     }))
   }, [options])
